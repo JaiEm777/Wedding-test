@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planner Plus v5</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">Wedding Planner Plus v5</h1>
+                    <nav class="nav">
+                        <ul class="nav-list">
+                            <li><button class="nav-button active" data-view="dashboard">Dashboard</button></li>
+                            <li><button class="nav-button" data-view="checklist">Checklist</button></li>
+                            <li><button class="nav-button" data-view="vendors">Vendors</button></li>
+                            <li><button class="nav-button" data-view="budget">Budget</button></li>
+                            <li><button class="nav-button" data-view="registration">UK Registration</button></li>
+                            <li><button class="nav-button" data-view="guests">Guest List</button></li>
+                            <li><button class="nav-button" data-view="moodboard">Moodboard</button></li>
+                        </ul>
+                    </nav>
+                    <button class="hamburger" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Dashboard View -->
+                <div id="dashboard" class="view active">
+                    <div class="view-header">
+                        <h2>Wedding Dashboard</h2>
+                        <div class="dashboard-controls">
+                            <label for="wedding-date-input" class="form-label">Wedding Date</label>
+                            <input type="date" id="wedding-date-input" class="form-control" value="2026-04-25">
+                        </div>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card countdown-card">
+                            <div class="card__body">
+                                <h3>Days Until Wedding</h3>
+                                <div class="countdown-display" id="countdown-display">
+                                    <span class="countdown-number" id="days-remaining">0</span>
+                                    <span class="countdown-text">days to go</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card progress-card">
+                            <div class="card__body">
+                                <h3>Task Progress</h3>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" id="progress-bar">
+                                        <div class="progress-fill" id="progress-fill"></div>
+                                    </div>
+                                    <span class="progress-text" id="progress-text">0% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card budget-card">
+                            <div class="card__body">
+                                <h3>Budget Overview</h3>
+                                <div class="budget-thumbnail" id="budget-thumbnail">
+                                    <div class="budget-chart-placeholder">
+                                        <div class="pie-chart-mock"></div>
+                                    </div>
+                                    <p class="budget-summary" id="budget-summary">£0 / £25,625</p>
+                                </div>
+                                <div class="budget-controls">
+                                    <label for="overall-budget" class="form-label">Overall Budget</label>
+                                    <input type="number" id="overall-budget" class="form-control" min="0" step="100" value="25625">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card stats-card">
+                            <div class="card__body">
+                                <h3>Guest Stats</h3>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="total-guests">0</span>
+                                        <span class="stat-label">Total Guests</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="accepted-guests">0</span>
+                                        <span class="stat-label">Accepted</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="declined-guests">0</span>
+                                        <span class="stat-label">Declined</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="booked-vendors">0</span>
+                                        <span class="stat-label">Booked Vendors</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checklist View -->
+                <div id="checklist" class="view">
+                    <div class="view-header">
+                        <h2>Wedding Checklist</h2>
+                        <button class="btn btn--primary" id="add-task-btn">Add Task</button>
+                    </div>
+                    <div class="checklist-container">
+                        <div class="checklist-items" id="checklist-items"></div>
+                    </div>
+                </div>
+
+                <!-- Vendors View -->
+                <div id="vendors" class="view">
+                    <div class="view-header">
+                        <h2>Vendors</h2>
+                        <button class="btn btn--primary" id="add-vendor-btn">Add Vendor</button>
+                    </div>
+                    <div class="vendors-container">
+                        <div class="vendors-table" id="vendors-table"></div>
+                    </div>
+                </div>
+
+                <!-- Budget View -->
+                <div id="budget" class="view">
+                    <div class="view-header">
+                        <h2>Budget Manager</h2>
+                        <div class="budget-actions">
+                            <button class="btn btn--primary" id="add-category-btn">+ Add Category</button>
+                        </div>
+                    </div>
+                    <div class="budget-totals" id="budget-totals">
+                        <div class="total-item">
+                            <span class="total-label">Overall Budget:</span>
+                            <span class="total-amount" id="overall-budget-display">£25,625</span>
+                        </div>
+                        <div class="total-item">
+                            <span class="total-label">Total Allocated:</span>
+                            <span class="total-amount" id="total-allocated">£0</span>
+                        </div>
+                        <div class="total-item">
+                            <span class="total-label">Total Actual:</span>
+                            <span class="total-amount" id="total-actual">£0</span>
+                        </div>
+                        <div class="total-item">
+                            <span class="total-label">Remaining:</span>
+                            <span class="total-amount" id="budget-remaining">£25,625</span>
+                        </div>
+                    </div>
+                    <div class="budget-container">
+                        <div class="budget-table" id="budget-table"></div>
+                    </div>
+                </div>
+
+                <!-- Registration View -->
+                <div id="registration" class="view">
+                    <div class="view-header">
+                        <h2>UK Registration</h2>
+                        <button class="btn btn--primary" id="add-registration-item-btn">Add Item</button>
+                    </div>
+                    <div class="registration-container">
+                        <div class="registration-table" id="registration-table"></div>
+                        <div class="registration-summary" id="registration-summary">
+                            <div class="summary-totals">
+                                <div class="total-item">
+                                    <span class="total-label">Total Estimated:</span>
+                                    <span class="total-amount" id="total-estimated">£0</span>
+                                </div>
+                                <div class="total-item">
+                                    <span class="total-label">Total Actual:</span>
+                                    <span class="total-amount" id="total-actual-reg">£0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guest List View -->
+                <div id="guests" class="view">
+                    <div class="view-header">
+                        <h2>Guest List</h2>
+                        <div class="guest-actions">
+                            <button class="btn btn--primary" id="add-party-btn">Add Party</button>
+                            <button class="btn btn--secondary" id="export-csv-btn">Export CSV</button>
+                        </div>
+                    </div>
+                    <div class="guests-summary" id="guests-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Guests:</span>
+                            <span class="summary-number" id="total-guests-summary">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Accepted:</span>
+                            <span class="summary-number" id="accepted-guests-summary">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Declined:</span>
+                            <span class="summary-number" id="declined-guests-summary">0</span>
+                        </div>
+                    </div>
+                    <div class="guests-container">
+                        <div class="guests-columns">
+                            <div class="party-column">
+                                <h3>Parties</h3>
+                                <div class="party-panel" id="party-panel"></div>
+                            </div>
+                            <div class="guest-column">
+                                <div class="guest-table-header">
+                                    <h3 id="selected-party-name">Select a party to view guests</h3>
+                                    <button class="btn btn--sm btn--secondary" id="add-guest-btn" disabled>Add Individual</button>
+                                </div>
+                                <div class="guest-table" id="guest-table"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moodboard View -->
+                <div id="moodboard" class="view">
+                    <div class="view-header">
+                        <h2>Moodboard</h2>
+                        <p class="view-description">Collect inspiration for your special day</p>
+                    </div>
+                    <div class="moodboard-container">
+                        <div class="empty-state">
+                            <h3>Coming Soon</h3>
+                            <p>The moodboard feature will be available in a future update.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Party Modal -->
+        <div id="party-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="party-modal-close">&times;</span>
+                <h3 id="party-modal-title">Add Party</h3>
+                <form id="party-form">
+                    <div class="form-group">
+                        <label for="party-name" class="form-label">Party Name</label>
+                        <input type="text" id="party-name" class="form-control" required placeholder="e.g. Smith Family, College Friends">
+                    </div>
+                    <div class="form-group">
+                        <label for="party-notes" class="form-label">Notes</label>
+                        <textarea id="party-notes" class="form-control" rows="3" placeholder="Optional notes about this party"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Save Party</button>
+                        <button type="button" class="btn btn--secondary" id="party-modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Guest Modal -->
+        <div id="guest-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="guest-modal-close">&times;</span>
+                <h3 id="guest-modal-title">Add Individual</h3>
+                <form id="guest-form">
+                    <div class="form-group">
+                        <label for="guest-first-name" class="form-label">First Name</label>
+                        <input type="text" id="guest-first-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guest-last-name" class="form-label">Last Name</label>
+                        <input type="text" id="guest-last-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guest-rsvp" class="form-label">RSVP Status</label>
+                        <select id="guest-rsvp" class="form-control">
+                            <option value="Pending">Pending</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Declined">Declined</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="guest-notes" class="form-label">Special Notes</label>
+                        <textarea id="guest-notes" class="form-control" rows="2" placeholder="Optional notes about this guest"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Save Guest</button>
+                        <button type="button" class="btn btn--secondary" id="guest-modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Task Modal -->
+        <div id="task-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="task-modal-close">&times;</span>
+                <h3 id="task-modal-title">Add Task</h3>
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-text" class="form-label">Task Description</label>
+                        <input type="text" id="task-text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-due" class="form-label">Due Date</label>
+                        <input type="date" id="task-due" class="form-control" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Save Task</button>
+                        <button type="button" class="btn btn--secondary" id="task-modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vendor Modal -->
+        <div id="vendor-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="vendor-modal-close">&times;</span>
+                <h3 id="vendor-modal-title">Add Vendor</h3>
+                <form id="vendor-form">
+                    <div class="form-group">
+                        <label for="vendor-name" class="form-label">Vendor Name</label>
+                        <input type="text" id="vendor-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor-category" class="form-label">Category</label>
+                        <select id="vendor-category" class="form-control" required>
+                            <option value="">Select category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor-quote" class="form-label">Quoted Cost (£)</label>
+                        <input type="number" id="vendor-quote" class="form-control" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor-contact" class="form-label">Contact Info</label>
+                        <input type="text" id="vendor-contact" class="form-control" placeholder="Email or phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor-confirmed" class="form-label">Booking Status</label>
+                        <select id="vendor-confirmed" class="form-control">
+                            <option value="false">Pending</option>
+                            <option value="true">Confirmed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor-notes" class="form-label">Notes</label>
+                        <textarea id="vendor-notes" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Save Vendor</button>
+                        <button type="button" class="btn btn--secondary" id="vendor-modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Category Modal -->
+        <div id="category-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="category-modal-close">&times;</span>
+                <h3>Add Budget Category</h3>
+                <form id="category-form">
+                    <div class="form-group">
+                        <label for="category-name" class="form-label">Category Name</label>
+                        <input type="text" id="category-name" class="form-control" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Add Category</button>
+                        <button type="button" class="btn btn--secondary" id="category-modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
